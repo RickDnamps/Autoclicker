@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brand">#1E88E5</color>
+    <color name="brand_dark">#0D47A1</color>
+    <color name="accent">#FFC107</color>
+    <color name="panel_bg">#E6202124</color>
+    <color name="target_fill">#552196F3</color>
+    <color name="target_ring">#FF1E88E5</color>
+    <color name="running">#FF43A047</color>
+    <color name="stop">#FFE53935</color>
+</resources>

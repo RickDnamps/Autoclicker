@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AutoClicker</string>
+    <string name="service_label">AutoClicker</string>
+    <string name="service_description">Permet à AutoClicker de simuler des appuis à l\'écran aux positions que vous choisissez. Aucune donnée n\'est lue ni collectée.</string>
+
+    <string name="status_title">Service d\'accessibilité</string>
+    <string name="status_on">Activé ✓</string>
+    <string name="status_off">Désactivé — requis pour simuler les clics</string>
+    <string name="enable_service">Activer dans les paramètres</string>
+    <string name="restricted_hint">Android 13+ : si l\'option est grisée (« paramètre restreint »), ouvrez Infos de l\'appli → menu ⋮ → « Autoriser les paramètres restreints », puis réessayez.</string>
+    <string name="open_app_info">Infos de l\'appli</string>
+
+    <string name="show_panel">Afficher le panneau flottant</string>
+    <string name="hide_panel">Masquer le panneau flottant</string>
+
+    <string name="section_speed">Vitesse</string>
+    <string name="interval_ms">Intervalle entre les clics (ms)</string>
+    <string name="press_ms">Durée de l\'appui (ms)</string>
+    <string name="speed_estimate">≈ %1$s clics / seconde</string>
+    <string name="random_interval">Intervalle aléatoire</string>
+    <string name="random_interval_ms">Variation max (± ms)</string>
+    <string name="random_offset">Position aléatoire</string>
+    <string name="random_offset_px">Décalage max (± pixels)</string>
+
+    <string name="section_multi">Plusieurs points</string>
+    <string name="multi_sequential">Un après l\'autre</string>
+    <string name="multi_simultaneous">Tous en même temps</string>
+
+    <string name="section_stop">Arrêt automatique</string>
+    <string name="stop_never">Jamais (jusqu\'à ce que j\'appuie sur stop)</string>
+    <string name="stop_count">Après un nombre de cycles</string>
+    <string name="stop_time">Après une durée</string>
+    <string name="stop_count_value">Nombre de cycles</string>
+    <string name="stop_time_value">Durée (secondes)</string>
+
+    <string name="section_look">Apparence</string>
+    <string name="target_size">Taille des points</string>
+    <string name="panel_size">Taille de la barre de commande</string>
+
+    <string name="section_help">Mode d\'emploi</string>
+    <string name="help_text">1. Activez le service d\'accessibilité.\n2. Appuyez sur « Afficher le panneau flottant » puis ouvrez votre jeu.\n3. Déplacez le point ① à l\'endroit à cliquer (+ pour ajouter des points, − pour en retirer).\n4. ▶ démarre, ■ arrête. Déplacez la barre avec la poignée du haut.\n\nLa vitesse réelle maximale dépend du téléphone (souvent 50 à 100 clics/s).</string>
+
+    <string name="toast_enable_first">Activez d\'abord le service d\'accessibilité</string>
+    <string name="toast_no_target">Ajoutez au moins un point avec +</string>
+    <string name="toast_stopped">AutoClicker arrêté</string>
+
+    <string name="cd_drag">Déplacer</string>
+    <string name="cd_play">Démarrer / arrêter</string>
+    <string name="cd_add">Ajouter un point</string>
+    <string name="cd_remove">Retirer un point</string>
+    <string name="cd_settings">Réglages</string>
+    <string name="cd_close">Fermer</string>
+</resources>
