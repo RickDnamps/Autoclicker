@@ -39,11 +39,18 @@ aucune permission Internet.
 > ⚠️ Certains jeux en ligne interdisent les auto-clickers dans leurs conditions d'utilisation :
 > à utiliser à vos risques.
 
+## Publier sur le Play Store
+
+Tout est prêt dans [`docs/play-store/`](docs/play-store/README.md) : étapes, textes de la fiche,
+réponses aux formulaires (accessibilité, sécurité des données…), icône 512 × 512 et image de
+présentation. La politique de confidentialité est dans [`docs/privacy-policy.html`](docs/privacy-policy.html).
+
 ## Compiler
 
 ```bash
 ./gradlew assembleRelease   # APK : app/build/outputs/apk/release/app-release.apk
 ```
 
-Requiert le SDK Android (compileSdk 35) et JDK 17. Le build release est signé avec la clé de
-debug pour pouvoir être installé directement.
+Requiert le SDK Android (compileSdk 36) et JDK 17. `./gradlew bundleRelease` produit le `.aab`
+pour le Play Store. Sans clé privée (secrets `SIGNING_*`, voir le guide Play Store), les builds
+release sont signés avec la clé de debug : installables directement, mais refusés par le Play Store.

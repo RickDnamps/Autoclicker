@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">AutoClicker</string>
     <string name="service_label">AutoClicker</string>
-    <string name="service_description">Permet à AutoClicker de simuler des appuis à l\'écran aux positions que vous choisissez. Aucune donnée n\'est lue ni collectée.</string>
+    <string name="service_description">Permet à AutoClicker de simuler des appuis aux endroits de l\'écran que vous choisissez, uniquement quand vous appuyez sur ▶. AutoClicker ne lit pas le contenu de l\'écran, ne collecte aucune donnée et n\'a pas accès à Internet.</string>
 
     <string name="status_title">Service d\'accessibilité</string>
     <string name="app_tagline">Sans pub · Sans pistage</string>
@@ -25,6 +25,14 @@
     <string name="setup_step2_body">Dans la page qui s\'ouvre :\n1. touche les 3 points ⋮ en haut à droite,\n2. choisis « Autoriser les paramètres restreints »,\n3. confirme avec ton code ou ton empreinte.\n\nPas de ⋮ ? Refais d\'abord l\'étape 1 jusqu\'au message « Paramètre restreint ».</string>
     <string name="setup_step3_title">Activer pour de bon</string>
     <string name="setup_step3_body">Rouvre le réglage et active « AutoClicker ». Cette fois, ce n\'est plus grisé.</string>
+
+    <string name="disclosure_title">Utilisation de l\'accessibilité</string>
+    <string name="disclosure_message">AutoClicker utilise l\'API Service d\'accessibilité d\'Android pour une seule chose : simuler des appuis (touchers) aux endroits de l\'écran que vous avez choisis, uniquement quand vous appuyez sur ▶.\n\n• Aucune donnée n\'est collectée ni partagée.\n• L\'appli ne lit pas le contenu de l\'écran et n\'enregistre pas ce que vous tapez.\n• L\'appli n\'a pas accès à Internet.\n\nVous pouvez désactiver le service à tout moment dans les paramètres d\'accessibilité.\n\nAcceptez-vous qu\'AutoClicker utilise ce service ?</string>
+    <string name="disclosure_accept">J\'accepte</string>
+    <string name="disclosure_decline">Refuser</string>
+
+    <string name="privacy_policy">Politique de confidentialité</string>
+    <string name="privacy_policy_url">https://rickdnamps.github.io/Autoclicker/privacy-policy.html</string>
 
     <string name="setup_done_title">Tout est prêt !</string>
     <string name="setup_done_body">AutoClicker peut maintenant cliquer à ta place.</string>

@@ -8,6 +8,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rickdnamps.autoclicker.databinding.ActivitySetupBinding
 import com.rickdnamps.autoclicker.databinding.ItemSetupStepBinding
 
@@ -24,7 +25,10 @@ class SetupActivity : AppCompatActivity() {
         @StringRes val body: Int,
         @StringRes val action: Int,
         val open: (Context) -> Unit,
-    )
+    ) {
+        /** Opening the accessibility screen requires the user's informed consent first. */
+        val needsConsent: Boolean get() = action == R.string.setup_open_service
+    }
 
     private lateinit var binding: ActivitySetupBinding
     private lateinit var steps: List<Step>
@@ -68,8 +72,10 @@ class SetupActivity : AppCompatActivity() {
             step.view.body.setText(step.body)
             step.view.action.setText(step.action)
             step.view.action.setOnClickListener {
-                stepsTapped = maxOf(stepsTapped, index + 1)
-                step.open(this)
+                withConsentIfNeeded(step.needsConsent) {
+                    stepsTapped = maxOf(stepsTapped, index + 1)
+                    step.open(this)
+                }
             }
         }
 
@@ -84,6 +90,28 @@ class SetupActivity : AppCompatActivity() {
         binding.doneGroup.isVisible = done
         binding.setupIntro.isVisible = !done
         if (done) stepsTapped = 0 else highlightCurrentStep()
+    }
+
+    /**
+     * Prominent disclosure required by Google Play before the user is sent to
+     * enable an accessibility service: explains what the API is used for and
+     * asks for explicit consent.
+     */
+    private fun withConsentIfNeeded(needed: Boolean, onAccepted: () -> Unit) {
+        if (!needed || prefs.getBoolean("accessibilityConsent", false)) {
+            onAccepted()
+            return
+        }
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.disclosure_title)
+            .setMessage(R.string.disclosure_message)
+            .setCancelable(false)
+            .setPositiveButton(R.string.disclosure_accept) { _, _ ->
+                prefs.edit().putBoolean("accessibilityConsent", true).apply()
+                onAccepted()
+            }
+            .setNegativeButton(R.string.disclosure_decline, null)
+            .show()
     }
 
     /** Outlines the next step to do and ticks the ones already done. */

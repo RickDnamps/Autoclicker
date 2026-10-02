@@ -1,7 +1,9 @@
 package com.rickdnamps.autoclicker
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         bindConfig(ClickConfig.load(this))
 
         binding.setupButton.setOnClickListener { openSetup() }
+        binding.privacyButton.setOnClickListener { openPrivacyPolicy() }
         binding.overlayButton.setOnClickListener { toggleOverlay() }
 
         binding.intervalInput.doAfterTextChanged { updateSpeedEstimate() }
@@ -168,6 +171,14 @@ class MainActivity : AppCompatActivity() {
             overlay.show()
             // Go back to the home screen so the user can open the game.
             moveTaskToBack(true)
+        }
+    }
+
+    private fun openPrivacyPolicy() {
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.privacy_policy_url))))
+        } catch (e: ActivityNotFoundException) {
+            // No browser installed: nothing to open.
         }
     }
 
