@@ -2,7 +2,9 @@ package com.rickdnamps.autoclicker
 
 import android.accessibilityservice.AccessibilityService
 import android.content.Intent
+import android.view.KeyEvent
 import android.view.accessibility.AccessibilityEvent
+import android.widget.Toast
 
 /**
  * Accessibility service: required by Android to inject taps (dispatchGesture)
@@ -29,6 +31,21 @@ class AutoClickService : AccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) = Unit
+
+    /**
+     * Emergency stop: a volume key always stops clicking, even when the
+     * injected taps keep the screen from responding to touches.
+     */
+    override fun onKeyEvent(event: KeyEvent): Boolean {
+        val isVolume = event.keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ||
+            event.keyCode == KeyEvent.KEYCODE_VOLUME_UP
+        if (!isVolume || !ClickEngine.isAnyRunning) return false
+        if (event.action == KeyEvent.ACTION_DOWN) {
+            ClickEngine.stopAll()
+            Toast.makeText(this, R.string.toast_stopped, Toast.LENGTH_SHORT).show()
+        }
+        return true
+    }
 
     override fun onInterrupt() {
         overlay?.stopClicking()

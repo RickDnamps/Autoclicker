@@ -13,6 +13,7 @@ Il simule des appuis rapides à l'écran, y compris dans les jeux.
 - **Taille des points** et **taille de la barre de commande** réglables.
 - Barre flottante déplaçable : ▶/■ démarrer-arrêter, ＋/－ points, ⚙ réglages, ✕ fermer.
 - Les positions des points sont mémorisées.
+- **Arrêt d'urgence** : une touche de volume, ou toucher l'écran 3 fois, arrête les clics.
 - **Assistant de configuration** guidé, étape par étape, avec ouverture directe des bons menus.
 
 La vitesse maximale réelle dépend du téléphone (souvent 50 à 100 clics/seconde avec un intervalle

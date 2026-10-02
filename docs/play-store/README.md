@@ -94,6 +94,7 @@ FONCTIONS
 • Taille des points et de la barre réglable
 • Les positions des points sont mémorisées
 • Assistant de configuration guidé, étape par étape
+• Arrêt d'urgence avec une touche de volume
 
 UTILISATION DE L'ACCESSIBILITÉ
 AutoClicker utilise l'API Service d'accessibilité d'Android uniquement pour simuler des appuis aux endroits de l'écran que vous choisissez, lorsque vous appuyez sur ▶, et pour afficher la barre flottante. L'application ne lit pas le contenu de l'écran, n'enregistre pas ce que vous tapez et ne collecte aucune donnée. Le service n'est activé qu'avec votre accord et peut être désactivé à tout moment dans les paramètres d'accessibilité.
@@ -127,6 +128,7 @@ FEATURES
 • Adjustable target and bar size
 • Target positions are remembered
 • Step-by-step guided setup
+• Emergency stop with a volume key
 
 ACCESSIBILITY SERVICE USE
 AutoClicker uses Android's Accessibility Service API only to perform taps at the screen positions you choose, when you press ▶, and to display the floating bar. The app does not read screen content, does not record what you type and collects no data. The service is only enabled with your consent and can be turned off at any time in the accessibility settings.
@@ -163,7 +165,8 @@ pas les enfants).
 ```
 AutoClicker est un outil d'automatisation de clics choisi et configuré par l'utilisateur. Le service d'accessibilité est utilisé uniquement pour :
 1) exécuter des appuis (dispatchGesture) aux positions de l'écran que l'utilisateur a placées lui-même, uniquement après qu'il a appuyé sur le bouton ▶ de la barre flottante, et jusqu'à ce qu'il appuie sur ■ ou que la condition d'arrêt qu'il a choisie soit atteinte ;
-2) afficher la barre de commande flottante et les points de clic (TYPE_ACCESSIBILITY_OVERLAY).
+2) afficher la barre de commande flottante et les points de clic (TYPE_ACCESSIBILITY_OVERLAY) ;
+3) pendant les clics uniquement, détecter l'appui sur une touche de volume (flagRequestFilterKeyEvents) pour servir d'arrêt d'urgence. Aucune autre touche n'est observée et rien n'est enregistré.
 L'application ne lit pas le contenu des fenêtres (canRetrieveWindowContent=false), n'écoute aucun événement à des fins de collecte, ne prend aucune décision autonome, ne collecte et ne transmet aucune donnée (aucune permission Internet). Avant d'ouvrir le réglage d'accessibilité, l'application affiche un écran d'information clair et demande le consentement explicite de l'utilisateur.
 ```
 - Vidéo : lien YouTube **non répertorié** (voir le scénario ci-dessous).

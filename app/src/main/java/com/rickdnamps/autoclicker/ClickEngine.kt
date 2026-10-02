@@ -7,6 +7,7 @@ import android.graphics.PointF
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.widget.Toast
 import kotlin.random.Random
 
 /**
@@ -21,6 +22,12 @@ class ClickEngine(
 ) {
     companion object {
         private const val START_DELAY_MS = 150L
+
+        /** A real touch cancels the injected tap: give the user's finger room. */
+        private const val USER_TOUCH_PAUSE_MS = 1_000L
+        /** Touching the screen this many times within the window stops clicking. */
+        private const val TOUCHES_TO_STOP = 3
+        private const val TOUCH_WINDOW_MS = 4_000L
 
         /** Only one engine may click at a time. */
         private var running: ClickEngine? = null
@@ -43,6 +50,7 @@ class ClickEngine(
     private var nextDueAt = 0L
     private var cycles = 0L
     private var pointIndex = 0
+    private val userTouches = ArrayDeque<Long>()
 
     var isRunning = false
         private set
@@ -60,6 +68,7 @@ class ClickEngine(
         generation++
         cycles = 0
         pointIndex = 0
+        userTouches.clear()
         startedAt = SystemClock.uptimeMillis()
         // Short delay so the markers become click-through before the first tap.
         nextDueAt = startedAt + START_DELAY_MS
@@ -111,14 +120,31 @@ class ClickEngine(
                 if (gen == generation) scheduleNext()
             }
 
-            // Cancelled e.g. when the user touches the screen: keep going.
+            // Cancelled when the user touches the screen: let them act.
             override fun onCancelled(gestureDescription: GestureDescription?) {
-                if (gen == generation) scheduleNext()
+                if (gen == generation) onUserTouch()
             }
         }
         if (!service.dispatchGesture(builder.build(), callback, handler)) {
             stop()
         }
+    }
+
+    /**
+     * Injected taps and real touches fight over the screen: pause so the user's
+     * own tap can go through, and stop if they keep touching (they want out).
+     */
+    private fun onUserTouch() {
+        val now = SystemClock.uptimeMillis()
+        userTouches.addLast(now)
+        while (userTouches.first() < now - TOUCH_WINDOW_MS) userTouches.removeFirst()
+        if (userTouches.size >= TOUCHES_TO_STOP) {
+            stop()
+            Toast.makeText(service, R.string.toast_stopped, Toast.LENGTH_SHORT).show()
+            return
+        }
+        nextDueAt = now + USER_TOUCH_PAUSE_MS
+        handler.postAtTime(tick, nextDueAt)
     }
 
     private fun scheduleNext() {

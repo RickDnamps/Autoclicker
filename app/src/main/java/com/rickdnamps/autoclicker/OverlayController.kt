@@ -132,6 +132,7 @@ class OverlayController(private val service: AutoClickService) {
                 scaleType = ImageView.ScaleType.FIT_CENTER
                 setPadding(iconPadding, iconPadding, iconPadding, iconPadding)
                 setOnClickListener { onClick() }
+                setOnTouchListener(stopOnTouchDown)
             }.also {
                 val lp = LinearLayout.LayoutParams(buttonSize, buttonSize)
                 lp.topMargin = (dp(2) * scale).toInt()
@@ -187,6 +188,7 @@ class OverlayController(private val service: AutoClickService) {
         setTargetsTouchable(false)
         engine.start(points, config)
         updatePlayIcon()
+        toast(R.string.toast_emergency_stop)
     }
 
     private fun onEngineStopped() {
@@ -267,6 +269,21 @@ class OverlayController(private val service: AutoClickService) {
             }
         }
 
+    /**
+     * While clicking, every panel button stops on finger *down*: an injected tap
+     * can cancel the user's touch before it becomes a click, so waiting for the
+     * finger to lift could make stopping impossible at high speed.
+     */
+    private val stopOnTouchDown = View.OnTouchListener { _, event ->
+        if (event.actionMasked == MotionEvent.ACTION_DOWN && ClickEngine.isAnyRunning) {
+            ClickEngine.stopAll()
+            updatePlayIcon()
+            true
+        } else {
+            false
+        }
+    }
+
     /** Moves [window] while the finger drags the view this listener is attached to. */
     private inner class DragListener(
         private val window: View,
@@ -281,6 +298,11 @@ class OverlayController(private val service: AutoClickService) {
         override fun onTouch(v: View, event: MotionEvent): Boolean {
             when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN -> {
+                    // Grabbing the bar's handle also stops clicking.
+                    if (ClickEngine.isAnyRunning) {
+                        ClickEngine.stopAll()
+                        updatePlayIcon()
+                    }
                     downX = event.rawX
                     downY = event.rawY
                     startX = params.x
