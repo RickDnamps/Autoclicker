@@ -23,6 +23,11 @@ import androidx.annotation.StringRes
  */
 class OverlayController(private val service: AutoClickService) {
 
+    private companion object {
+        /** The controller whose panel is on screen; there must never be two. */
+        var active: OverlayController? = null
+    }
+
     private class Target(val view: TargetView, val params: WindowManager.LayoutParams)
 
     private val wm = service.getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -37,8 +42,14 @@ class OverlayController(private val service: AutoClickService) {
 
     val isShowing: Boolean get() = panel != null
 
+    /** True while the panel is hidden because the user opened the settings from it. */
+    private var hiddenForSettings = false
+
     fun show() {
+        hiddenForSettings = false
         if (isShowing) return
+        active?.takeIf { it !== this }?.hide()
+        active = this
         config = ClickConfig.load(service)
         createPanel(Point(dp(8), dp(160)))
         val saved = ClickConfig.loadTargets(service)
@@ -46,6 +57,8 @@ class OverlayController(private val service: AutoClickService) {
     }
 
     fun hide() {
+        hiddenForSettings = false
+        if (active === this) active = null
         if (!isShowing) return
         engine.stop()
         saveTargets()
@@ -58,6 +71,11 @@ class OverlayController(private val service: AutoClickService) {
     }
 
     fun stopClicking() = engine.stop()
+
+    /** Brings the panel back when the user leaves the settings opened from the gear. */
+    fun restoreAfterSettings() {
+        if (hiddenForSettings) show()
+    }
 
     /** Re-reads the settings and resizes the bar / targets accordingly. */
     fun applyConfig() {
@@ -124,7 +142,7 @@ class OverlayController(private val service: AutoClickService) {
         button(R.drawable.ic_add, R.string.cd_add) { engine.stop(); addTarget() }
         button(R.drawable.ic_remove, R.string.cd_remove) { engine.stop(); removeLastTarget() }
         button(R.drawable.ic_settings, R.string.cd_settings) { openSettings() }
-        button(R.drawable.ic_close, R.string.cd_close) { hide() }
+        button(R.drawable.ic_close, R.string.cd_close) { ClickEngine.stopAll(); hide() }
 
         wm.addView(layout, params)
         panel = layout
@@ -136,8 +154,10 @@ class OverlayController(private val service: AutoClickService) {
     }
 
     private fun openSettings() {
-        engine.stop()
-        saveTargets()
+        // Clicking always stops and the panel steps aside while the settings are open.
+        ClickEngine.stopAll()
+        hide()
+        hiddenForSettings = true
         service.startActivity(
             Intent(service, MainActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
@@ -147,8 +167,10 @@ class OverlayController(private val service: AutoClickService) {
     // -------------------------------------------------------------- clicking
 
     private fun toggleRun() {
-        if (engine.isRunning) {
-            engine.stop()
+        // Stop must always work, whichever engine is clicking.
+        if (ClickEngine.isAnyRunning) {
+            ClickEngine.stopAll()
+            updatePlayIcon()
             return
         }
         if (targets.isEmpty()) {

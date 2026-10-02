@@ -21,8 +21,11 @@ class AutoClickService : AccessibilityService() {
 
     override fun onServiceConnected() {
         super.onServiceConnected()
+        // Android may reconnect the service: never leave an old panel or clicks running,
+        // and keep the existing panel if this same instance is reconnected.
+        instance?.takeIf { it !== this }?.release()
         instance = this
-        overlay = OverlayController(this)
+        if (overlay == null) overlay = OverlayController(this)
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) = Unit
@@ -44,6 +47,6 @@ class AutoClickService : AccessibilityService() {
     private fun release() {
         overlay?.hide()
         overlay = null
-        instance = null
+        if (instance === this) instance = null
     }
 }

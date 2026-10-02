@@ -44,6 +44,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        // Never keep clicking while the settings are on screen.
+        ClickEngine.stopAll()
         updateStatus()
         // Show the setup guide by itself the first time the app opens without the service.
         if (!setupShownThisLaunch && !SystemSetup.isServiceEnabled(this)) openSetup()
@@ -52,6 +54,8 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         saveConfig()
+        // Settings opened from the floating gear: put the panel back when leaving.
+        AutoClickService.instance?.overlay?.restoreAfterSettings()
     }
 
     private fun bindConfig(config: ClickConfig): Unit = with(binding) {

@@ -19,8 +19,18 @@ class ClickEngine(
     private val service: AccessibilityService,
     private val onStopped: () -> Unit,
 ) {
-    private companion object {
-        const val START_DELAY_MS = 150L
+    companion object {
+        private const val START_DELAY_MS = 150L
+
+        /** Only one engine may click at a time. */
+        private var running: ClickEngine? = null
+
+        val isAnyRunning: Boolean get() = running != null
+
+        /** Emergency stop for whatever is clicking. */
+        fun stopAll() {
+            running?.stop()
+        }
     }
 
     private val handler = Handler(Looper.getMainLooper())
@@ -41,7 +51,9 @@ class ClickEngine(
 
     fun start(points: List<PointF>, config: ClickConfig) {
         if (points.isEmpty()) return
+        running?.takeIf { it !== this }?.stop()
         stopInternal()
+        running = this
         this.points = points
         this.config = config.sanitized()
         isRunning = true
@@ -61,6 +73,7 @@ class ClickEngine(
     }
 
     private fun stopInternal() {
+        if (running === this) running = null
         isRunning = false
         generation++
         handler.removeCallbacks(tick)
@@ -74,7 +87,8 @@ class ClickEngine(
 
     private fun dispatchNext() {
         if (!isRunning) return
-        if (limitReached()) {
+        // The service was disconnected or replaced: this engine is orphaned.
+        if (AutoClickService.instance !== service || limitReached()) {
             stop()
             return
         }
