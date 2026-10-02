@@ -26,7 +26,8 @@ de 1 à 10 ms).
 3. Ouvrez AutoClicker : un **assistant de configuration** s'affiche tout seul tant que le service
    n'est pas activé. Chaque étape a un bouton qui ouvre directement le bon menu, y compris le
    déblocage « paramètre restreint » d'Android 13+ (*Infos de l'appli → ⋮ → Autoriser les
-   paramètres restreints*).
+   paramètres restreints*). Sur Xiaomi / Redmi / POCO : *Infos de l'appli → ⋮ → Infos sur
+   l'application → (en bas) Autoriser les paramètres restreints*.
 4. Appuyez sur **Afficher le panneau flottant**, ouvrez votre jeu, placez le point et appuyez sur ▶.
 
 ## Fonctionnement

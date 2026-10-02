@@ -11,8 +11,8 @@ android {
         applicationId = "com.rickdnamps.autoclicker"
         minSdk = 24
         targetSdk = 36
-        versionCode = 5
-        versionName = "1.4"
+        versionCode = 6
+        versionName = "1.5"
     }
 
     // Private release key, provided by the environment (GitHub secrets in CI).

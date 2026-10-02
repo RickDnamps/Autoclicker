@@ -22,7 +22,7 @@
     <string name="setup_step1_title">Essayer d\'activer</string>
     <string name="setup_step1_body">Appuie sur le bouton puis sur l\'interrupteur « AutoClicker ».\n\n• Si ça s\'active : accepte, reviens ici, c\'est fini.\n• Si c\'est grisé ou qu\'un message « Paramètre restreint » s\'affiche : appuie sur OK, reviens ici et passe à l\'étape 2.</string>
     <string name="setup_step2_title">Débloquer le réglage</string>
-    <string name="setup_step2_body">⚠️ Les 3 points ⋮ n\'apparaissent QUE si tu as fait l\'étape 1 et vu le message « Paramètre restreint ».\n\nDans la page qui s\'ouvre :\n1. touche les 3 points ⋮ en haut à droite,\n2. choisis « Autoriser les paramètres restreints »,\n3. confirme avec ton code ou ton empreinte.\n\nPas de ⋮ ? Refais l\'étape 1 jusqu\'au message, puis reviens ici.</string>
+    <string name="setup_step2_body">⚠️ L\'option n\'apparaît QUE si tu as fait l\'étape 1 et vu le message « Paramètre restreint ».\n\nDans la page qui s\'ouvre :\n\n• La plupart des téléphones : touche les 3 points ⋮ en haut à droite → « Autoriser les paramètres restreints » → confirme avec ton code ou ton empreinte.\n\n• Xiaomi / Redmi / POCO : touche ⋮ → « Infos sur l\'application », puis descends tout en bas (Paramètres avancés) et active « Autoriser les paramètres restreints ».\n\nRien trouvé ? Refais l\'étape 1 jusqu\'au message, puis reviens ici.</string>
     <string name="setup_locked">🔒 Fais d\'abord l\'étape %1$d</string>
     <string name="setup_step3_title">Activer pour de bon</string>
     <string name="setup_step3_body">Rouvre le réglage et active « AutoClicker ». Cette fois, ce n\'est plus grisé.</string>
