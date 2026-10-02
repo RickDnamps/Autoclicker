@@ -32,9 +32,9 @@ class SetupActivity : AppCompatActivity() {
     private val prefs by lazy { getSharedPreferences("setup", MODE_PRIVATE) }
 
     /** Number of steps whose button the user already tapped. */
-    private var progress: Int
-        get() = prefs.getInt("progress", 0)
-        set(value) = prefs.edit().putInt("progress", value).apply()
+    private var stepsTapped: Int
+        get() = prefs.getInt("stepsTapped", 0)
+        set(value) = prefs.edit().putInt("stepsTapped", value).apply()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -68,7 +68,7 @@ class SetupActivity : AppCompatActivity() {
             step.view.body.setText(step.body)
             step.view.action.setText(step.action)
             step.view.action.setOnClickListener {
-                progress = maxOf(progress, index + 1)
+                stepsTapped = maxOf(stepsTapped, index + 1)
                 step.open(this)
             }
         }
@@ -83,12 +83,12 @@ class SetupActivity : AppCompatActivity() {
         binding.stepsGroup.isVisible = !done
         binding.doneGroup.isVisible = done
         binding.setupIntro.isVisible = !done
-        if (done) progress = 0 else highlightCurrentStep()
+        if (done) stepsTapped = 0 else highlightCurrentStep()
     }
 
     /** Outlines the next step to do and ticks the ones already done. */
     private fun highlightCurrentStep() {
-        val current = progress.coerceAtMost(steps.lastIndex)
+        val current = stepsTapped.coerceAtMost(steps.lastIndex)
         val density = resources.displayMetrics.density
         val primary = ContextCompat.getColor(this, R.color.brand)
         val doneColor = ContextCompat.getColor(this, R.color.status_on)
