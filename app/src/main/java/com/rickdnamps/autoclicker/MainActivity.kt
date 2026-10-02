@@ -2,24 +2,23 @@ package com.rickdnamps.autoclicker
 
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.slider.Slider
 import com.rickdnamps.autoclicker.databinding.ActivityMainBinding
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
+
+    private companion object {
+        var setupShownThisLaunch = false
+    }
 
     private lateinit var binding: ActivityMainBinding
 
@@ -29,29 +28,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Keep the content clear of the status/navigation bars and the keyboard.
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
-            val bars = insets.getInsets(
-                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
-            )
-            val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
-            view.updatePadding(
-                left = bars.left,
-                top = bars.top,
-                right = bars.right,
-                bottom = maxOf(bars.bottom, ime.bottom),
-            )
-            insets
-        }
+        binding.root.applySystemBarsPadding()
 
         bindConfig(ClickConfig.load(this))
 
-        binding.enableButton.setOnClickListener { openAccessibilitySettings() }
-        binding.appInfoButton.setOnClickListener {
-            startActivity(
-                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName"))
-            )
-        }
+        binding.setupButton.setOnClickListener { openSetup() }
         binding.overlayButton.setOnClickListener { toggleOverlay() }
 
         binding.intervalInput.doAfterTextChanged { updateSpeedEstimate() }
@@ -64,6 +45,8 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateStatus()
+        // Show the setup guide by itself the first time the app opens without the service.
+        if (!setupShownThisLaunch && !SystemSetup.isServiceEnabled(this)) openSetup()
     }
 
     override fun onPause() {
@@ -154,12 +137,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateStatus() {
         val service = AutoClickService.instance
-        val enabled = service != null
+        val enabled = SystemSetup.isServiceEnabled(this)
         binding.statusText.setText(if (enabled) R.string.status_on else R.string.status_off)
         binding.statusDot.backgroundTintList = ColorStateList.valueOf(
             ContextCompat.getColor(this, if (enabled) R.color.status_on else R.color.status_off)
         )
-        binding.enableGroup.isVisible = !enabled
+        binding.setupButton.isVisible = !enabled
 
         val showing = service?.overlay?.isShowing == true
         binding.overlayButton.setText(if (showing) R.string.hide_panel else R.string.show_panel)
@@ -170,7 +153,7 @@ class MainActivity : AppCompatActivity() {
         val overlay = AutoClickService.instance?.overlay
         if (overlay == null) {
             Toast.makeText(this, R.string.toast_enable_first, Toast.LENGTH_SHORT).show()
-            openAccessibilitySettings()
+            openSetup()
             return
         }
         saveConfig()
@@ -184,8 +167,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun openAccessibilitySettings() {
-        startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+    private fun openSetup() {
+        setupShownThisLaunch = true
+        startActivity(Intent(this, SetupActivity::class.java))
     }
 
     private fun EditText.longOrNull(): Long? = text?.toString()?.trim()?.toLongOrNull()

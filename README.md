@@ -13,6 +13,7 @@ Il simule des appuis rapides à l'écran, y compris dans les jeux.
 - **Taille des points** et **taille de la barre de commande** réglables.
 - Barre flottante déplaçable : ▶/■ démarrer-arrêter, ＋/－ points, ⚙ réglages, ✕ fermer.
 - Les positions des points sont mémorisées.
+- **Assistant de configuration** guidé, étape par étape, avec ouverture directe des bons menus.
 
 La vitesse maximale réelle dépend du téléphone (souvent 50 à 100 clics/seconde avec un intervalle
 de 1 à 10 ms).
@@ -22,9 +23,10 @@ de 1 à 10 ms).
 1. Téléchargez `AutoClicker.apk` depuis la page **Releases** du dépôt (ou l'artefact
    `AutoClicker-apk` de la dernière exécution de l'action **Build APK**).
 2. Ouvrez le fichier sur le téléphone et autorisez l'installation depuis cette source.
-3. Ouvrez AutoClicker → **Activer dans les paramètres** → activez le service *AutoClicker*.
-   - Android 13+ : si l'option est grisée (« paramètre restreint »), allez dans
-     *Paramètres → Applications → AutoClicker → ⋮ → Autoriser les paramètres restreints*, puis réessayez.
+3. Ouvrez AutoClicker : un **assistant de configuration** s'affiche tout seul tant que le service
+   n'est pas activé. Chaque étape a un bouton qui ouvre directement le bon menu, y compris le
+   déblocage « paramètre restreint » d'Android 13+ (*Infos de l'appli → ⋮ → Autoriser les
+   paramètres restreints*).
 4. Appuyez sur **Afficher le panneau flottant**, ouvrez votre jeu, placez le point et appuyez sur ▶.
 
 ## Fonctionnement

@@ -7,10 +7,28 @@
     <string name="status_title">Service d\'accessibilité</string>
     <string name="app_tagline">Sans pub · Sans pistage</string>
     <string name="status_on">Activé ✓</string>
-    <string name="status_off">Désactivé — requis pour cliquer</string>
-    <string name="enable_service">Activer dans les paramètres</string>
-    <string name="restricted_hint">Android 13+ : si l\'option est grisée (« paramètre restreint »), ouvrez Infos de l\'appli → menu ⋮ → « Autoriser les paramètres restreints », puis réessayez.</string>
-    <string name="open_app_info">Infos de l\'appli</string>
+    <string name="status_off">Pas encore activé</string>
+    <string name="setup_button">Configurer (1 minute)</string>
+
+    <string name="setup_title">Configuration</string>
+    <string name="setup_intro">Android demande ton accord pour qu\'AutoClicker puisse toucher l\'écran à ta place. Suis les étapes : chaque bouton ouvre le bon menu.</string>
+    <string name="setup_later">Plus tard</string>
+    <string name="setup_open_service">Ouvrir le réglage</string>
+    <string name="setup_open_app_info">Ouvrir les infos de l\'appli</string>
+
+    <string name="setup_simple_title">Activer AutoClicker</string>
+    <string name="setup_simple_body">Appuie sur le bouton, active l\'interrupteur « AutoClicker » puis accepte. Reviens ensuite ici.</string>
+
+    <string name="setup_step1_title">Essayer d\'activer</string>
+    <string name="setup_step1_body">Appuie sur le bouton puis sur l\'interrupteur « AutoClicker ».\n\n• Si ça s\'active : accepte, reviens ici, c\'est fini.\n• Si c\'est grisé ou qu\'un message « Paramètre restreint » s\'affiche : appuie sur OK, reviens ici et passe à l\'étape 2.</string>
+    <string name="setup_step2_title">Débloquer le réglage</string>
+    <string name="setup_step2_body">Dans la page qui s\'ouvre :\n1. touche les 3 points ⋮ en haut à droite,\n2. choisis « Autoriser les paramètres restreints »,\n3. confirme avec ton code ou ton empreinte.\n\nPas de ⋮ ? Refais d\'abord l\'étape 1 jusqu\'au message « Paramètre restreint ».</string>
+    <string name="setup_step3_title">Activer pour de bon</string>
+    <string name="setup_step3_body">Rouvre le réglage et active « AutoClicker ». Cette fois, ce n\'est plus grisé.</string>
+
+    <string name="setup_done_title">Tout est prêt !</string>
+    <string name="setup_done_body">AutoClicker peut maintenant cliquer à ta place.</string>
+    <string name="setup_done_button">Commencer</string>
 
     <string name="show_panel">Afficher le panneau flottant</string>
     <string name="hide_panel">Masquer le panneau flottant</string>
@@ -40,9 +58,9 @@
     <string name="panel_size">Taille de la barre de commande</string>
 
     <string name="section_help">Mode d\'emploi</string>
-    <string name="help_text">1. Activez le service d\'accessibilité.\n2. Appuyez sur « Afficher le panneau flottant » puis ouvrez votre jeu.\n3. Déplacez le point ① à l\'endroit à cliquer (+ pour ajouter des points, − pour en retirer).\n4. ▶ démarre, ■ arrête. Déplacez la barre avec la poignée du haut.\n\nLa vitesse réelle maximale dépend du téléphone (souvent 50 à 100 clics/s).</string>
+    <string name="help_text">1. Faites la configuration (bouton « Configurer »).\n2. Appuyez sur « Afficher le panneau flottant » puis ouvrez votre jeu.\n3. Déplacez le point ① à l\'endroit à cliquer (+ pour ajouter des points, − pour en retirer).\n4. ▶ démarre, ■ arrête. Déplacez la barre avec la poignée du haut.\n\nLa vitesse réelle maximale dépend du téléphone (souvent 50 à 100 clics/s).</string>
 
-    <string name="toast_enable_first">Activez d\'abord le service d\'accessibilité</string>
+    <string name="toast_enable_first">Termine d\'abord la configuration</string>
     <string name="toast_no_target">Ajoutez au moins un point avec +</string>
     <string name="toast_stopped">AutoClicker arrêté</string>
 
