@@ -114,7 +114,10 @@ class SetupActivity : AppCompatActivity() {
             .show()
     }
 
-    /** Outlines the next step to do and ticks the ones already done. */
+    /**
+     * Outlines the next step to do, ticks the ones already done and locks the
+     * ones after it: the Android 13+ unlock only appears once step 1 was tried.
+     */
     private fun highlightCurrentStep() {
         val current = stepsTapped.coerceAtMost(steps.lastIndex)
         val density = resources.displayMetrics.density
@@ -125,8 +128,17 @@ class SetupActivity : AppCompatActivity() {
         steps.forEachIndexed { index, step ->
             val isCurrent = index == current
             val isDone = index < current
+            val isLocked = index > current
             step.view.card.strokeWidth = if (isCurrent) (2 * density).toInt() else 0
-            step.view.root.alpha = if (isCurrent) 1f else 0.75f
+            step.view.root.alpha = when {
+                isCurrent -> 1f
+                isLocked -> 0.5f
+                else -> 0.75f
+            }
+            // Done steps stay usable: step 1 may have to be redone to get the unlock.
+            step.view.action.isEnabled = !isLocked
+            step.view.lockHint.isVisible = isLocked
+            step.view.lockHint.text = getString(R.string.setup_locked, index)
             step.view.number.text = if (isDone) "✓" else (index + 1).toString()
             step.view.number.backgroundTintList = ColorStateList.valueOf(
                 when {
