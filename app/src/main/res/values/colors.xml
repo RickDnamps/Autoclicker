@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="brand">#1E88E5</color>
-    <color name="brand_dark">#0D47A1</color>
-    <color name="accent">#FFC107</color>
+    <color name="brand">#1E6FD9</color>
+    <color name="accent">#FFB300</color>
+    <color name="status_on">#43A047</color>
+    <color name="status_off">#E53935</color>
+
+    <!-- Overlay -->
     <color name="panel_bg">#E6202124</color>
     <color name="target_fill">#552196F3</color>
     <color name="target_ring">#FF1E88E5</color>
-    <color name="running">#FF43A047</color>
-    <color name="stop">#FFE53935</color>
+
+    <!-- Light surfaces -->
+    <color name="surface">#F7F9FD</color>
+    <color name="surface_container_low">#F1F4F9</color>
+    <color name="surface_container">#EBEEF4</color>
+    <color name="surface_container_high">#E5E8EE</color>
+    <color name="surface_container_highest">#DFE3E9</color>
+    <color name="on_surface">#181C20</color>
+    <color name="on_surface_variant">#43474E</color>
+    <color name="outline">#73777F</color>
+    <color name="outline_variant">#C3C6CF</color>
+    <color name="primary_container">#D6E3FF</color>
+    <color name="on_primary_container">#001B3E</color>
 </resources>

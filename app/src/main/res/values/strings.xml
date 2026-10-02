@@ -5,8 +5,9 @@
     <string name="service_description">Permet à AutoClicker de simuler des appuis à l\'écran aux positions que vous choisissez. Aucune donnée n\'est lue ni collectée.</string>
 
     <string name="status_title">Service d\'accessibilité</string>
+    <string name="app_tagline">Sans pub · Sans pistage</string>
     <string name="status_on">Activé ✓</string>
-    <string name="status_off">Désactivé — requis pour simuler les clics</string>
+    <string name="status_off">Désactivé — requis pour cliquer</string>
     <string name="enable_service">Activer dans les paramètres</string>
     <string name="restricted_hint">Android 13+ : si l\'option est grisée (« paramètre restreint »), ouvrez Infos de l\'appli → menu ⋮ → « Autoriser les paramètres restreints », puis réessayez.</string>
     <string name="open_app_info">Infos de l\'appli</string>
@@ -15,8 +16,8 @@
     <string name="hide_panel">Masquer le panneau flottant</string>
 
     <string name="section_speed">Vitesse</string>
-    <string name="interval_ms">Intervalle entre les clics (ms)</string>
-    <string name="press_ms">Durée de l\'appui (ms)</string>
+    <string name="interval_ms">Intervalle (ms)</string>
+    <string name="press_ms">Appui (ms)</string>
     <string name="speed_estimate">≈ %1$s clics / seconde</string>
     <string name="random_interval">Intervalle aléatoire</string>
     <string name="random_interval_ms">Variation max (± ms)</string>

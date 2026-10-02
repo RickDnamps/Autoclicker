@@ -1,13 +1,19 @@
 package com.rickdnamps.autoclicker
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.slider.Slider
 import com.rickdnamps.autoclicker.databinding.ActivityMainBinding
@@ -18,9 +24,25 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Keep the content clear of the status/navigation bars and the keyboard.
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+            val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
+            view.updatePadding(
+                left = bars.left,
+                top = bars.top,
+                right = bars.right,
+                bottom = maxOf(bars.bottom, ime.bottom),
+            )
+            insets
+        }
 
         bindConfig(ClickConfig.load(this))
 
@@ -134,10 +156,14 @@ class MainActivity : AppCompatActivity() {
         val service = AutoClickService.instance
         val enabled = service != null
         binding.statusText.setText(if (enabled) R.string.status_on else R.string.status_off)
-        binding.enableGroup.isVisible = !enabled
-        binding.overlayButton.setText(
-            if (service?.overlay?.isShowing == true) R.string.hide_panel else R.string.show_panel
+        binding.statusDot.backgroundTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(this, if (enabled) R.color.status_on else R.color.status_off)
         )
+        binding.enableGroup.isVisible = !enabled
+
+        val showing = service?.overlay?.isShowing == true
+        binding.overlayButton.setText(if (showing) R.string.hide_panel else R.string.show_panel)
+        binding.overlayButton.setIconResource(if (showing) R.drawable.ic_close else R.drawable.ic_play)
     }
 
     private fun toggleOverlay() {
